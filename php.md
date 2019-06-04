@@ -272,3 +272,21 @@ var_dump(intdiv(10, 3));
 ## php优化
 
 [48条高效率的PHP优化写法](https://www.awaimai.com/1050.html)
+
+## php对象基础
+
+#### 写出一些php魔幻（术）方法;
+__construct() 实例化类时自动调用。
+__destruct() 类对象使用结束时自动调用。
+__set() 在给未定义的属性赋值的时候调用。
+__get() 调用未定义的属性时候调用。
+__isset() 使用isset()或empty()函数时候会调用。
+__unset() 使用unset()时候会调用。
+__sleep() 使用serialize序列化时候调用。
+__wakeup() 使用unserialize反序列化的时候调用。
+__call() 调用一个不存在的方法的时候调用。
+__callStatic()调用一个不存在的静态方法是调用。
+__toString() 把对象转换成字符串的时候会调用。比如 echo。
+__invoke() 当尝试把对象当方法调用时调用。
+__set_state() 当使用var_export()函数时候调用。接受一个数组参数。
+__clone() 当使用clone复制一个对象时候调用。
