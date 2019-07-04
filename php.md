@@ -1,5 +1,21 @@
 ## php web相关
 
+#### PHP的session机制
+
+1. 当代码session_start()运行时，服务器产生一个session文件，同时也产生一个与之对应的session_id; 数据显序列化再卸乳session 文件中，客户端获取session信息时，将session_id传递给服务器，服务器根据session_id找到对应文件，读取信息然后对信息反序列化就能获取到数据。 注：PHP默认情况下，适用客户端的Cookie来保存session_id（session_start();之后，会自动将session_id存储在cookie中），但是必须注意，Session不一定必须依赖Cookie，这也就是Session相比于Cookie的高明之处。当客户端的Cookie被禁用或出现问题时，PHP会自动把session_id附着在URL中，这样再通过session_id就能实现跨页使用session变量了。但是这种附着也是有一定条件的，即php.ini文件中的“session.use_trans_sid=1”或者编译时打开了--enable-trans-sid选项。
+2. 当session禁用时，需设置以下参数，session_id会自动追加到URL中
+3. Session在大型网站中使用，需注意的问题 
+
+  3.1 如何解决sessio文件过多，消耗IO性能 
+  
+    建设设置php.ini的sessio.save_handler参数设置为redis或者memcache等nosql数据库
+    
+  3.2 session 同步问题
+  
+    a. 设置php.ini的sessio.save_handler参数设置为redis或者memcache等nosql数据库 
+    
+    b. 在负载均衡层保持会话绑定到某个服务器上，例如：nginx设置为ip_hash
+
 #### cookie与session的区别
 
 1. cookie数据存放在客户的浏览器上，session数据放在服务器上。
@@ -276,17 +292,31 @@ var_dump(intdiv(10, 3));
 ## php对象基础
 
 #### 写出一些php魔幻（术）方法;
+
 __construct() 实例化类时自动调用。
+
 __destruct() 类对象使用结束时自动调用。
+
 __set() 在给未定义的属性赋值的时候调用。
+
 __get() 调用未定义的属性时候调用。
+
 __isset() 使用isset()或empty()函数时候会调用。
+
 __unset() 使用unset()时候会调用。
+
 __sleep() 使用serialize序列化时候调用。
+
 __wakeup() 使用unserialize反序列化的时候调用。
+
 __call() 调用一个不存在的方法的时候调用。
+
 __callStatic()调用一个不存在的静态方法是调用。
+
 __toString() 把对象转换成字符串的时候会调用。比如 echo。
+
 __invoke() 当尝试把对象当方法调用时调用。
+
 __set_state() 当使用var_export()函数时候调用。接受一个数组参数。
+
 __clone() 当使用clone复制一个对象时候调用。
