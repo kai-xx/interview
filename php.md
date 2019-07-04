@@ -4,13 +4,17 @@
 
 1. 当代码session_start()运行时，服务器产生一个session文件，同时也产生一个与之对应的session_id; 数据显序列化再卸乳session 文件中，客户端获取session信息时，将session_id传递给服务器，服务器根据session_id找到对应文件，读取信息然后对信息反序列化就能获取到数据。 注：PHP默认情况下，适用客户端的Cookie来保存session_id（session_start();之后，会自动将session_id存储在cookie中），但是必须注意，Session不一定必须依赖Cookie，这也就是Session相比于Cookie的高明之处。当客户端的Cookie被禁用或出现问题时，PHP会自动把session_id附着在URL中，这样再通过session_id就能实现跨页使用session变量了。但是这种附着也是有一定条件的，即php.ini文件中的“session.use_trans_sid=1”或者编译时打开了--enable-trans-sid选项。
 2. 当session禁用时，需设置以下参数，session_id会自动追加到URL中
+
+    session.use_trans_sid = 1
+    session.use_only_cookies = 0
+    
 3. Session在大型网站中使用，需注意的问题 
 
-  3.1 如何解决sessio文件过多，消耗IO性能 
+      3.1 如何解决sessio文件过多，消耗IO性能 
   
     建设设置php.ini的sessio.save_handler参数设置为redis或者memcache等nosql数据库
     
-  3.2 session 同步问题
+      3.2 session 同步问题
   
     a. 设置php.ini的sessio.save_handler参数设置为redis或者memcache等nosql数据库 
     
